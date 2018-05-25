@@ -1,0 +1,22 @@
+.player_info_wrapper{
+    display: table;
+}
+
+.player_info_property{
+    display: table-cell;
+}
+
+player_info_value{
+    display: table-cell;
+}
+
+.team_img{
+    width: 100px!important;
+    max-width: 100px!important;
+}
+
+.team_choose td
+{
+    text-align: center;
+}
+

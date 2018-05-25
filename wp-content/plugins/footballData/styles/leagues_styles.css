@@ -1,0 +1,159 @@
+
+
+.overall_td{
+    padding-left: 15px;
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+.home_td{
+    //width:21%;
+    padding-left: 15px;
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+.away_td{
+    //width:23%;
+    padding-left: 15px;
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+.league_table{
+    width:100%; 
+}
+
+.second_teams_row{
+    width:100%;   
+}
+
+.second_teams_row td{
+    color: #666666!important;  
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.pos_td {
+    //width:5%;
+    padding-left: 5px;
+    // padding-right: 5px;
+}
+
+.team_td { 
+    width:24%
+}
+
+.small_td_td { 
+    width:3%;
+}
+
+.a_td {
+    width:8%;
+}
+.a_td_l{
+    width:5%;
+}
+
+.gd_td {
+    width:5%;
+}
+
+.pts_td {
+    width:5%;
+}
+
+
+.teams_row{
+    width:100%;   
+}
+
+.teams_row td{
+    color: #666666;  
+    font-size: 10px;
+}
+
+.team_td_bold { 
+    width:24%;
+    font-weight: bold;
+    color: #002366!important;
+}
+
+.gd_td_bold {
+    width:5%;
+    font-weight: bold;
+    color: #002366!important;
+}
+
+.pts_td_bold {
+    width:5%;
+    font-weight: bold;
+    color: #002366!important;
+}
+
+.bottom_row{
+    background-color: #242424;
+    min-height: 80px;
+    height: 40px!important;
+}
+.bottom_row td{
+    min-width:100%;
+    min-height: 100%;
+    text-align: center;
+}
+
+.footnote_title{
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 10px;;
+}
+
+.footnote_value{
+    font-size: 10px;
+    padding-right: 30px;
+}
+
+.legend{
+    background-color: #242424;
+    min-height: 40px!important;
+}
+
+@media only screen and (min-width: 480px) {
+ 
+}
+
+@media only screen and (min-width: 768px) {
+ 
+
+ 
+}
+
+
+
+.subW{
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.legend div span{
+    font-size: 0.6em;
+}
+
+
+
+.legend div span b{
+    padding-left: 30px;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+

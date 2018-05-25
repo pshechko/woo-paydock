@@ -564,3 +564,64 @@ require get_parent_theme_file_path( '/inc/customizer.php' );
  * SVG icons functions and filters.
  */
 require get_parent_theme_file_path( '/inc/icon-functions.php' );
+/*
+var_dump(wp_remote_post("http://apc-api.local/api/pdf/cert",
+    [
+    'method' => 'POST',
+    'timeout' => 45,
+    'body' => json_decode('{
+  "Organisation": "Google inc",
+  "Category": "EMPLOYMT",
+  "Type": "STDAA",
+  "Purpose": "Child Care Worker",
+  "Priority": "12312",
+  "Subject": {
+    "Names": [
+      {
+        "FirstGivenName": "Ipsum",
+        "OtherGivenNames": "Lorem",
+        "FamilyName": "Voloshyn",
+        "SingleNameOnly": 1,
+        "Type": "PRIM"
+      },
+      {
+        "FirstGivenName": "John",
+        "OtherGivenNames": "Bsrney",
+        "FamilyName": "Cleze",
+        "SingleNameOnly": 0,
+        "Type": "ALIAS"
+      }
+    ],
+    "BirthDate": "1970-12-21",
+    "BirthDateYearOnly": 1 ,
+    "BirthPlace": {
+      "Town": "Sydney",
+      "State": "NSW",
+      "Country": "AUS"
+    },
+    "Gender": "M",
+    "Addresses": [
+      {
+        "StartDate": "2008-10-20",
+        "EndDate": "2008-12-05",
+        "Postcode": "3182",
+        "Line": "34 Some St",
+        "Suburb": "St Kilda",
+        "State": "NSW",
+        "Type": "RESID",
+        "Country": "AUS"
+      }
+    ],
+    "Phones": [
+      {
+        "Number": "0255500000",
+        "Type": "PRIV"
+      }
+    ]
+  }
+}'),
+]
+)); die();
+
+
+*/

@@ -1,0 +1,146 @@
+
+
+.composition_match_wrapper{
+    width:100%;
+    min-width: 100%;
+    position: relative;
+    text-align: center;
+}
+.composition_match{
+    width: 80%;
+    min-width: 70%;
+    position: relative;
+    /* display: table; */
+    margin: 0px;
+    margin-left: 10%;
+}
+.cell-div img {
+    max-width: none !important;
+    width: 100% !important;
+}
+.row_div{
+    display: table;
+    text-align: center;
+    width: 100%;
+}
+.cell-div{
+    display: table-cell;
+    text-align: center;
+    width: 40%;
+    height: 200px;
+    //width: 100%;
+    //height: 100%;
+
+}
+
+
+
+
+.scorefield{
+    vertical-align: middle;
+    text-align: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: table-cell;
+    font-family: 'Asap', sans-serif!important;
+    color: #333333;
+    font-weight: bold;
+    font-size: 20px;
+    width: 10%;
+}
+
+.match_team_name{
+    display: table-cell;
+    text-align: center;
+    font-family: 'Asap', sans-serif!important;
+    color: #333333;
+    font-weight: bold;
+    font-size: 15px;
+    width: 40%;
+}
+
+.composition_match_date{
+    width:100%;
+    min-width: 70%;
+    position: relative;
+    color: #0078ff;
+    font-family: 'Asap', sans-serif!important;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+
+
+
+.input-b{
+
+    font-size : medium!important;
+    font-weight : normal!important;
+
+    font-family: 'Asap', sans-serif!important;
+    color: #333333 !important;
+    font-weight: bold !important;
+    font-size: 15pt !important;
+    cursor: pointer;
+    -moz-user-select: none;
+    -o-user-select:none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    margin: 0 0 10px;
+
+}
+
+
+.lineups_wrapper{
+    min-width: 48%;
+
+}
+
+.lineups_team{
+    background-color: #DDD;
+    border-top: 3px solid #333;
+}
+
+.lineups_sub_wrapper{
+    font-family: 'Asap', sans-serif!important;
+    font-weight: bold;
+    font-size: 20px;
+    width: 48%;
+    float: left;
+}
+.lineups_sub_wrapper:last-child{
+    float: right;
+}
+
+.lineups_team_sub_wrapper{
+    font-family: 'Asap', sans-serif!important;
+    font-weight: normal;
+    font-size: 9pt;
+    min-width: 48%;
+    max-width: 48%;
+    float: left;
+    padding-left: 5px;
+    height: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+.first_team_title{
+    font-family: 'Asap', sans-serif!important;
+    font-weight: bold;
+    font-size: 13pt;
+    padding-left: 5px;
+}
+
+.t2{
+    cursor: pointer;
+}
+
+.hidden_spoiler{
+    height: 100%;
+}

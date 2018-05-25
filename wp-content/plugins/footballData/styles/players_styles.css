@@ -1,0 +1,110 @@
+
+
+.player_info_item_even{
+    background-color: #e5e9ef;
+}
+
+.custom-site-content{
+    width:100%;
+    min-height: 100px;
+    height: auto;
+}
+
+.thumbnail{
+    position: relative;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.featured_image{
+    max-width: 100%!important;
+    width:100%!important;
+    z-index: 1;
+    top: 0px;
+}
+
+.name_position{
+    background-color: rgba(0, 35, 102, 0.6);
+    position: absolute;
+    //top:-100px;
+    bottom: 10%;
+    z-index: 2;
+    float: left;
+    padding-right: 15px;
+    height: auto;
+}
+
+.player_name{
+    color: #ffffff;
+    font-size: 18pt;
+    padding-left: 15px;
+    margin-bottom: 0px!important;
+    font-family: 'Asap', sans-serif!important;
+    font-weight: bold;
+
+}
+
+.player_position{
+    color: #ffffff;
+    font-size: 10pt;
+    padding-left: 15px;
+    margin-bottom: 0px!important;
+    font-family: 'Asap', sans-serif!important;
+    text-align: left;
+
+}
+
+.players_description{
+    text-align: justify!important;
+    font-family: 'Asap', sans-serif!important;
+    font-weight: bold;
+    color: #000000;
+    font-size: 18px;
+}
+
+.info_title{
+    font-family: 'Asap', sans-serif!important;
+    color: #333333;
+    font-weight: bold;
+    font-size: 15pt;
+    margin-bottom: 0px!important;
+    margin-top: 10px;
+}
+
+.player_information_table{
+    width: 100%;
+}
+
+.player_information_table td{
+    width: 22%;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-family: 'Asap', sans-serif!important;
+}
+
+.info_property{
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+.info_property_first{
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+    padding-left: 10px;
+}
+
+.info_value{
+    color: #666666;
+    font-size: 9pt;
+}
+
+.info_value_sp{
+    color: #666666;
+    font-size: 9pt;
+    width:34%!important;
+}
+
+
+

@@ -1,0 +1,490 @@
+
+
+.fa-plus {
+    font-size: 11px!important;
+}
+
+.with_shadow:hover{
+    -webkit-box-shadow: inset 0px 0px 8px 4px rgba(50, 50, 50, 0.33);
+    -moz-box-shadow:    inset 0px 0px 8px 4px rgba(50, 50, 50, 0.33);
+    box-shadow:         inset 0px 0px 8px 4px rgba(50, 50, 50, 0.33);
+}
+
+.add_new_season{
+    cursor:pointer; 
+}
+
+.year_select{
+    color: inherit;
+    background-color: inherit;
+    border: 0;
+    box-shadow: 0;
+} 
+
+.c_green{
+    color: rgb(0, 255, 72);
+}
+
+.year_select option{ 
+    color: black;
+}
+
+
+.even{
+    background-color: rgb(229, 233, 239);
+}
+
+.even .darker{
+    background-color: rgb(222, 226, 233);
+}
+
+.odd .darker{
+    background-color: rgb(242, 242, 242);
+}
+
+
+
+.remove{
+    // background-color: rgb(204, 184, 184);
+    text-align: center;
+    cursor: pointer;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.remove:hover{
+    background-color: rgb(207, 147, 147);
+}
+
+.fa{
+    font-size: 18px;
+}
+
+.team_table{
+    width: 80%;
+    border-spacing: 0px!important;
+    border-collapse: collapse;
+    font-size: 18px;
+    margin-bottom: 25px;
+    -webkit-box-shadow: 4px 4px 3px 0px rgba(50, 50, 50, 0.6);
+    -moz-box-shadow:    4px 4px 3px 0px rgba(50, 50, 50, 0.6);
+    box-shadow:         4px 4px 3px 0px rgba(50, 50, 50, 0.6);
+
+}
+
+
+
+.team_table tr{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 22px;
+}
+.team_table td{
+    vertical-align: middle;
+    font-size: 0.6em !important;
+    line-height: 1em;
+}
+.team_table td input,.team_table td select{
+    width: 100%;
+    margin: 0;
+    background-color: inherit;
+    font-size: inherit;
+    padding: 0px 5px!important;
+    height: 100%;
+    border-bottom: 0;
+    border-top: 0;
+    border-right: 0;
+    box-shadow: none;
+
+}
+
+.team_table .even td input, .team_table .even td select {
+    border-color: rgb(208, 208, 208);
+}
+
+.team_td{
+    width: 16%;    
+}
+
+.td_bold{
+    font-weight: bold;
+    color: #002366!important;
+}
+
+.number_td{
+    padding-left: 30px;
+}
+.member_td{
+    width:30%;
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+.position_td{
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+.played_td{
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+.goals_td{
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+.ycy_td{
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+.rcr_td{
+    color: #002366;
+    font-weight: bold;
+    font-size: 9pt;
+}
+
+.first_players_row{
+    background-color: #334f85!important;  
+    color: #ffffff!important;
+    font-family: 'Asap', sans-serif!important;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    text-align: center;  
+}
+
+.first_players_row td {
+
+}
+.second_teams_row{
+    text-align: center;
+}
+
+
+.even_players_row{
+    background-color: #e5e9ef;
+}
+
+.last_row{
+    background-color: rgb(163, 163, 163);
+    //color: white;
+    text-align: center;
+    cursor: pointer;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.add_new:hover{
+    background-color: rgb(113, 173, 121);
+}
+
+.red_hover:hover{
+    background-color: rgb(173, 113, 113);
+}
+
+.noselect{
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.top_wrapper{
+    font-size: 20px;
+}
+
+.fa_news{
+    margin: 20px;
+    font-size: 24px;
+}
+
+.disabled_c{
+    color: rgb(178, 178, 178)!important;
+}
+
+.widefat{
+    max-width: 420px;
+}
+
+.settings_block{
+    display: inline-table;
+    width: 425px;
+    margin: 15px;
+}
+
+.okbutton{
+    width:900px;
+}
+
+.example{
+    min-height: 50px;
+
+}
+
+.tbl{
+    border-spacing: 0;
+    background-color: white;
+    width:100%;
+}
+
+.tbl tr{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    eight: 22px;
+}
+
+.tbl tr td{
+    color: #002366;
+    font-weight: bold;
+}
+
+.even{
+    background-color: #e5e9ef!important;
+}
+
+.first_tb{
+    background-color: #334f85!important;
+
+}
+.first_tb td{
+    font-weight: bold;
+    color: #ffffff!important;
+}
+
+.w_small{
+    width: 100px;
+}
+
+.image_w_100{
+    width: 100px;
+    min-width: 100px;
+    //min-height: 100px;
+    height: auto;
+    //background-color: #DDD;
+}
+.score_box{
+    width:40px 
+}
+.txtar{
+    background-color: #DDD;
+    vertical-align: top;
+    min-width: 120px;
+}
+
+.txtar h2{
+    width:45%;
+    display: inline-block;
+}
+
+.txtar_title{
+    margin-top: 0px!important;
+    margin-bottom: 0px!important;
+}
+.txt{
+    height: 220px;
+}
+.team_choose td
+{
+    text-align: center;
+}
+
+.tw_small{
+    padding-left: 10px;
+    color: #55ACEE;
+}
+
+.tw_small:disabled{
+    color:#DDD;
+}
+
+.tc{
+    color: #55ACEE;
+}
+
+#twrapper{
+    font-size: 15px;
+    display: inline-block;
+}
+
+.side{
+
+}
+
+.side:disabled{
+    color: rgb(178, 178, 178)!important;
+}
+
+.pointer{
+    cursor:pointer;
+}
+
+.formwr{
+    min_width:100px;
+
+    /*background-color: red;*/
+}
+
+div[disabled].formwr{
+    pointer-events: none;
+    color: rgb(178, 178, 178)!important;
+}
+
+div[disabled].formwr input{
+    color: rgb(178, 178, 178)!important;
+}
+
+.twinput{
+    color: #0084B4!important;
+    font-family: Arial,sans-serif;
+    font-weight: bolder;
+    margin: 0;
+    background-color: transparent!important;
+    font-size: inherit;
+    padding: 0px 1px!important;
+    height: 100%;
+    border: 0!important;
+    box-shadow: none!important;
+}
+
+.twinput::-webkit-input-placeholder {
+    color: #D2F3FF!important;
+    font-family: Arial,sans-serif;
+}
+.twinput:-moz-placeholder {
+    color: #D2F3FF!important;
+    font-family: Arial,sans-serif;
+}
+.twinput::-moz-placeholder {
+    color: #D2F3FF!important;
+    font-family: Arial,sans-serif;
+}
+.twinput:-ms-input-placeholder {
+    color: #D2F3FF!important;   
+    font-family: Arial,sans-serif;
+}
+
+.smt{
+    color: #66B5D2!important;   
+    font-family: Arial,sans-serif;
+    font-weight: bolder;
+}
+
+
+
+div[disabled].formwr table tbody tr td span span.smt{
+    color: #B2B2B2!important;
+}
+
+div[disabled].formwr input::-webkit-input-placeholder {
+    color: rgb(231, 231, 231)!important;
+}
+div[disabled].formwr input:-moz-placeholder {
+    color: rgb(231, 231, 231)!important;
+}
+div[disabled].formwr input::-moz-placeholder {
+    color: rgb(231, 231, 231)!important;
+}
+div[disabled].formwr input:-ms-input-placeholder {
+    color: rgb(231, 231, 231)!important;
+}
+
+.twtable{
+    font-family: Arial,sans-serif;
+    width: 100%;
+    border-spacing: 0px;
+}
+
+.twtable tr td{
+    border-bottom: 1px solid #e1e8ed;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.end_sect td{
+    border-width: 2px!important;
+}
+
+.twtitle{
+    font-weight: bold;
+    text-align: center;
+    border-bottom: none!important;
+}
+
+.twrefresh{
+    width:100%;
+}
+.divided div{
+    display: inline-table;
+}
+.bigdiv{
+    width: 80%;
+}
+
+.smalldiv{
+    width:10%;
+}
+
+.fullw{
+    width:100%;
+}
+.txtar table{
+    min-width: 300px;
+}
+.txtar table td{
+    text-align: left!important;  
+}
+
+.pl_medkit_t{
+    font-size: 18px!important;
+}
+
+.pl_medkit_m{
+    color: #ABABAB;
+}
+
+.disabled_tr_m{
+    //  background-color:rgba(68, 68, 68,0.5);
+    color: #ABABAB;
+}
+
+#players_team_admin{
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+#players_team_admin td{ 
+    min-width: 20px;
+    vertical-align: middle;
+    font-size: 12px !important;
+    line-height: 2em;
+    padding: 0 10px;
+}
+
+.admin_big_text {
+    color: #444444;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+}
+
+td.ttn {
+    padding: 28px 20px;
+}
+
+td.tfn {
+    font-size: 14px;
+    max-width: 70px;
+    text-align: center;
+    padding: 7px 8px;
+}

@@ -1,0 +1,38 @@
+
+.wrapper{
+    display: table;
+    border-collapse:separate;
+    border-spacing:5px;
+   // background-color: #FFFAFA;
+}
+.oddpost{
+    display: table-row;
+    background-color: #DCDCDC;
+}
+.evenpost{
+    display: table-row;
+    background-color: #F5F5F5;
+}
+
+.pretwitmin{
+    margin-right: 10px;
+    font-weight: bold;
+    display: table-cell;
+}
+
+.pretwitact{
+    margin-right: 10px;
+    font-weight: bold;
+    display: table-cell;
+    text-align: center;
+}
+
+.twit{
+    display: inline;
+    display: table-cell;
+}
+
+.widefat{
+    width: 300px;
+    display: none!important;
+}

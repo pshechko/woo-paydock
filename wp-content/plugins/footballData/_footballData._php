@@ -1,0 +1,1186 @@
+<?php
+/*
+  Plugin Name: footballData
+  Description: Plugin adds data for site, lika "players", "leagues" ect.
+  Version: 1.0
+  Author: pshechko
+ */
+
+//ADDING CUSTOM STYLES//////////////////////////////////////////////////////////
+
+
+
+function my_theme_load_resources() {
+    $urlstyle = plugins_url('styles/leagues_styles.css', __FILE__);
+    wp_register_style('leagues_styles', $urlstyle, false, '0.1');
+    wp_enqueue_style('leagues_styles');
+
+    $urlstyle = plugins_url('styles/mystyles.css', __FILE__);
+    wp_register_style('theme_style1', $urlstyle, false, '0.1');
+    wp_enqueue_style('theme_style1');
+
+    $urlstyle = plugins_url('styles/players_styles.css', __FILE__);
+    wp_register_style('players_styles', $urlstyle, false, '0.1');
+    wp_enqueue_style('players_styles');
+
+    $urlstyle = plugins_url('styles/teams_styles.css', __FILE__);
+    wp_register_style('teams_styles', $urlstyle, false, '0.1');
+    wp_enqueue_style('teams_styles');
+
+    $urlstyle = plugins_url('styles/matches_styles.css', __FILE__);
+    wp_register_style('matches_styles', $urlstyle, false, '0.1');
+    wp_enqueue_style('matches_styles');
+
+    $urlstyle = plugins_url('styles/twitter_styles.css', __FILE__);
+    wp_register_style('twitter_styles', $urlstyle, false, '0.1');
+    wp_enqueue_style('twitter_styles');
+}
+
+add_action('wp_enqueue_scripts', 'my_theme_load_resources');
+
+//CUSTOM POST TYPES/////////////////////////////////////////////////////////////
+
+function wpt_player_posttype() {
+    register_post_type('players', array(
+        'labels' => array(
+            'name' => __('Players'),
+            'singular_name' => __('Player'),
+            'add_new' => __('Add New Player'),
+            'add_new_item' => __('Add New Player'),
+            'edit_item' => __('Edit Player'),
+            'new_item' => __('Add New Player'),
+            'view_item' => __('View Player'),
+            'search_items' => __('Search Player'),
+            'not_found' => __('No players found'),
+            'not_found_in_trash' => __('No players found in trash'),
+        ),
+        'public' => true,
+        'menu_icon' => plugins_url('icons', __FILE__) . "/players.png",
+        'supports' => array('title', 'editor', 'thumbnail', 'comments'),
+        'capability_type' => 'post',
+        'rewrite' => array("slug" => "players"), // Permalinks format
+        'menu_position' => 1005,
+        'register_meta_box_cb' => 'add_players_metaboxes'
+            )
+    );
+}
+
+add_action('init', 'wpt_player_posttype');
+
+function wpt_team_posttype() {
+    register_post_type('teams', array(
+        'labels' => array(
+            'name' => __('Teams'),
+            'singular_name' => __('Team'),
+            'add_new' => __('Add New Team'),
+            'add_new_item' => __('Add New Team'),
+            'edit_item' => __('Edit Team'),
+            'new_item' => __('Add New Team'),
+            'view_item' => __('View Team'),
+            'search_items' => __('Search Team'),
+            'not_found' => __('No teams found'),
+            'not_found_in_trash' => __('No teams found in trash'),
+        ),
+        'public' => true,
+        'menu_icon' => plugins_url('icons', __FILE__) . "/teams.png",
+        'supports' => array('title', 'editor', 'thumbnail', 'comments'),
+        'capability_type' => 'post',
+        'rewrite' => array("slug" => "teams"), // Permalinks format
+        'menu_position' => 1006,
+        'register_meta_box_cb' => 'add_teams_metaboxes'
+            )
+    );
+}
+
+add_action('init', 'wpt_team_posttype');
+
+function wpt_league_posttype() {
+    register_post_type('leagues', array(
+        'labels' => array(
+            'name' => __('Leagues'),
+            'singular_name' => __('League'),
+            'add_new' => __('Add New League'),
+            'add_new_item' => __('Add New League'),
+            'edit_item' => __('Edit League'),
+            'new_item' => __('Add New League'),
+            'view_item' => __('View League'),
+            'search_items' => __('Search League'),
+            'not_found' => __('No leagues found'),
+            'not_found_in_trash' => __('No leagues found in trash'),
+        ),
+        'public' => true,
+        'menu_icon' => plugins_url('icons', __FILE__) . "/leagues.png",
+        'supports' => array('title', 'editor', 'thumbnail', 'comments'),
+        'capability_type' => 'post',
+        'rewrite' => array("slug" => "leagues"), // Permalinks format
+        'menu_position' => 1007,
+        'register_meta_box_cb' => 'add_leagues_metaboxes'
+            )
+    );
+}
+
+add_action('init', 'wpt_league_posttype');
+
+function wpt_match_posttype() {
+    register_post_type('matches', array(
+        'labels' => array(
+            'name' => __('Matches'),
+            'singular_name' => __('Match'),
+            'add_new' => __('Add New Match'),
+            'add_new_item' => __('Add New Match'),
+            'edit_item' => __('Edit Match'),
+            'new_item' => __('Add New Match'),
+            'view_item' => __('View Match'),
+            'search_items' => __('Search Match'),
+            'not_found' => __('No matches found'),
+            'not_found_in_trash' => __('No matches found in trash'),
+        ),
+        'public' => true,
+        'menu_icon' => plugins_url('icons', __FILE__) . "/matches.png",
+        'supports' => array('title', 'editor', 'thumbnail', 'comments'),
+        'capability_type' => 'post',
+        'rewrite' => array("slug" => "matches"), // Permalinks format
+        'menu_position' => 1008,
+        'register_meta_box_cb' => 'add_matches_metaboxes'
+            )
+    );
+}
+
+add_action('init', 'wpt_match_posttype');
+
+function wpt_news_posttype() {
+    register_post_type('news', array(
+        'labels' => array(
+            'name' => __('News'),
+            'singular_name' => __('News'),
+            'add_new' => __('Add News'),
+            'add_new_item' => __('Add News'),
+            'edit_item' => __('Edit News'),
+            'new_item' => __('Add News'),
+            'view_item' => __('View News'),
+            'search_items' => __('Search News'),
+            'not_found' => __('No news found'),
+            'not_found_in_trash' => __('No news found in trash'),
+        ),
+        'public' => true,
+        'taxonomies' => array('category'),
+        'menu_icon' => plugins_url('icons', __FILE__) . "/news.png",
+        'supports' => array('title', 'editor', 'thumbnail', 'comments'),
+        'capability_type' => 'post',
+        'rewrite' => array("slug" => "news"), // Permalinks format
+        'menu_position' => 1009,
+        'register_meta_box_cb' => 'add_news_metaboxes'
+            )
+    );
+}
+
+add_action('init', 'wpt_news_posttype');
+
+//END OF CUSTOM POST TYPES//////////////////////////////////////////////////////
+//IMPORTING TWITTER/////////////////////////////////////////////////////////////
+
+function importTwitter() {
+    require('additional_classes/TwitterMatch.php' );
+}
+
+add_action('init', 'importTwitter');
+
+
+global $jal_db_version;
+$jal_db_version = "1.0";
+
+function jal_install () {
+   global $wpdb;
+   global $jal_db_version;
+ 
+    $table_name = $wpdb->prefix . "tweets";
+    if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+        $sql = "CREATE TABLE " . $table_name . " (
+	  id VARCHAR(55) NOT NULL,
+	  txt text  NOT NULL,
+	  min VARCHAR(55) NULL,
+	  act VARCHAR(55)  NULL,
+	  author VARCHAR(55) NOT NULL,
+          hashtag VARCHAR(55) NOT NULL,
+	  UNIQUE KEY id (id)
+	);";
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        dbDelta($sql);
+
+      
+        
+ 
+      add_option("jal_db_version", $jal_db_version);
+
+   }
+}
+
+
+register_activation_hook(__FILE__,'jal_install');
+
+
+//REPLACING SINGLE TEMPLATES////////////////////////////////////////////////////
+
+require_once('additional_classes/PageTemplater.php'); //class allows replace page template in plugins directory
+
+function get_custom_post_type_template($single_template) {
+    global $post;
+    global $post_type;
+    if ($post->post_type == $post_type) {
+        $single_template = dirname(__FILE__) . '/single_templates/single-' . $post_type . '.php';
+    }
+    return $single_template;
+}
+
+$post_type = 'players';
+add_filter('single_template', 'get_custom_post_type_template');
+$post_type = 'teams';
+add_filter('single_template', 'get_custom_post_type_template');
+$post_type = 'leagues';
+add_filter('single_template', 'get_custom_post_type_template');
+$post_type = 'matches';
+add_filter('single_template', 'get_custom_post_type_template');
+
+//SINGLE TEMPLATES ARE REPLACED/////////////////////////////////////////////////
+//SETTING METABOXES/////////////////////////////////////////////////////////////
+//PLAYERS METABOXES/////////////////////////////////////////////////////////////
+
+function add_players_metaboxes() {
+    add_meta_box('wpt_player_information', 'Player information', 'wpt_player_information', 'players', 'normal', 'high');
+    add_meta_box('wpt_career_overview', 'Career overview', 'wpt_career_overview', 'players', 'normal', 'high');
+    add_meta_box('wpt_players_team', 'Player`s team', 'wpt_players_team', 'players', 'normal', 'high');
+}
+
+function wpt_career_overview() {
+
+    $post = $_GET['post'];
+
+    $location = get_post_meta($post->ID, '_appearances', true);
+// echo"<p>!" . $post. "!</p>";
+    echo"<table>";
+    echo "<tr>";
+    echo "<td>Appearances:</td><td><input type='number' name='_appearances' value='" . get_post_meta($post, '_appearances', true) . "'/></td>";
+    echo "<td>Goals:</td><td><input type='number' name='_goals' value='" . get_post_meta($post, '_goals', true) . "'/></td>";
+    echo "<td>Yellow cards:</td><td><input type='number' name='_yellow_cards' value='" . get_post_meta($post, '_yellow_cards', true) . "'/></td>";
+    echo "</tr><tr>";
+    echo "<td>Red cards:</td><td><input type='number' name='_red_cards' value='" . get_post_meta($post, '_red_cards', true) . "'/></td>";
+    echo "<td>Titles won:</td><td><input type='number' name='_titles' value='" . get_post_meta($post, '_titles', true) . "'/></td>";
+    echo "<td>25-man squad member:</td><td><input type='text' name='_squad' value='" . get_post_meta($post, '_squad', true) . "'/></td>";
+    echo "</tr><tr>";
+    echo "<td>Home grown player:</td><td><input type='text' name='_home_grown' value='" . get_post_meta($post, '_home_grown', true) . "'/></td>";
+    echo "</tr>";
+    echo "</table>";
+}
+
+function wpt_player_information() {
+    $post = $_GET['post'];
+
+    echo"<table>";
+    echo "<tr>";
+    echo "<td>Date of Birth:</td><td><input type='date' name='_date_of_birth' value='" . get_post_meta($post, '_date_of_birth', true) . "'/></td>";
+    echo "<td>Age:</td><td><input type='number' name='_age' value='" . get_post_meta($post, '_age', true) . "'/></td>";
+    echo "<td>Country of birth:</td><td><input type='text' name='_country_of_birth' value='" . get_post_meta($post, '_country_of_birth', true) . "'/></td>";
+    echo "</tr><tr>";
+    echo "<td>Heigth:</td><td><input type='number' name='_height' value='" . get_post_meta($post, '_height', true) . "'/></td>";
+    echo "<td>Weigth:</td><td><input type='number' name='_weight' value='" . get_post_meta($post, '_weight', true) . "'/></td>";
+    echo "<td>National team:</td><td><input type='text' name='_natonal_team' value='" . get_post_meta($post, '_natonal_team', true) . "'/></td>";
+    echo "</tr>";
+    echo "</table>";
+}
+
+function wpt_players_team() {
+    $post = $_GET['post'];
+// global $this_post;
+//$this_post=$post;
+    $location = get_post_meta($post, '_team', true);
+//echo"<p>!" . $this_post . "!</p>";
+
+    $the_query = new WP_Query(array('post_type' => 'teams',));
+
+    echo"<table><tr><td>";
+
+    echo "Player`s team: ";
+    echo'</td><td>';
+// The Loop
+    if ($the_query->have_posts()) {
+
+        echo'<select required name="_team" >';
+        echo '<option disabled';
+        if (!$location)
+            echo ' selected';
+        echo'>select a team</option>';
+
+//$count = 0;
+        while ($the_query->have_posts()) {
+            $the_query->the_post();
+            $count = get_the_ID();
+            echo'<option';
+            if ($location == $count && $location != NULL) {
+                echo ' selected';
+            }
+            echo' value="' . $count . '">';
+            echo get_the_title();
+            echo'</option>';
+//$count++;
+        }
+        echo'</select>';
+    }
+    echo'</td><td>';
+    echo"Player`s position: ";
+    echo'</td><td>';
+
+    $positions = array("Goalkeeper", "Defender", "Midfielder", "Forward");
+    $current_value = get_post_meta($post, '_players_position', true);
+    echo'
+    <select name="_players_position">';
+
+    echo'<option disabled';
+    if (!$current_value) {
+        echo" selected";
+    }
+    echo'>select player`s position</option>';
+//$count = 0;
+    foreach ($positions as $position) {
+        echo'<option value="' . $position . '"';
+        if ($current_value == $position && $current_value != NULL) {
+            echo" selected";
+        }
+        echo'>' . $position . '</option>';
+    }
+    echo'</select>';
+
+    echo'</td><td>';
+    echo'Player`s number:';
+    echo'</td><td>';
+
+    $current_value = get_post_meta($post, '_number', true);
+    echo '<input type="number" name="_number" value="' . $current_value . '" />';
+    /*
+      echo "<select name='_number'>";
+      echo'<option disabled';
+      if (!$current_value) {
+      echo" selected";
+      }
+      echo'>select player`s number</option>';
+      for ($i = 1; $i <= 11; $i++) {
+      echo'<option value="' . $i . '"';
+      if ($current_value == $i && $current_value != NULL) {
+      echo" selected";
+      }
+      echo'>' . $i . '</option>';
+      }
+
+      echo "<select>"; */
+
+    echo"</td></tr></table>";
+
+//wp_reset_postdata();
+}
+
+//TEAMS METABOXES///////////////////////////////////////////////////////////////
+
+function add_teams_metaboxes() {
+    add_meta_box('wpt_teams_league', 'Team`s league', 'wpt_teams_league', 'teams', 'normal', 'high');
+    add_meta_box('wpt_teams_background', 'Team`s background image', 'wpt_teams_background', 'teams', 'normal', 'high');
+}
+
+function wpt_teams_league() {
+    /*
+      global $post;
+
+      $location = get_post_meta($post->ID, '_league', true);
+
+      $the_query = new WP_Query(array('post_type' => 'leagues',));
+
+      if ($the_query->have_posts()) {
+
+      echo'<select required name="_league">';
+      echo '<option disabled';
+      if (!$location)
+      echo ' selected';
+      echo'>Select a league</option>';
+
+      $count = 0;
+      while ($the_query->have_posts()) {
+      $the_query->the_post();
+      $count =  get_the_ID();
+      echo'<option';
+      if ($location == $count && $location != NULL) {
+      echo ' selected';
+      }
+      echo' value="' . $count . '">';
+      echo get_the_title();
+      echo'</option>';
+      //$count++;
+      }
+      echo'</select>';
+      } */
+    global $post;
+
+    $league = get_post_meta($post->ID, '_league', true);
+    $leagues = get_post_meta($post->ID, '_leagues', true);
+    // print_r($leagues);
+    $the_query = new WP_Query(array('post_type' => 'leagues',));
+
+
+
+
+    if ($the_query->have_posts()) {
+        ?>
+        <p>
+            <?php
+            $count = 0;
+            $subcount = 0;
+            while ($the_query->have_posts()) {
+                $the_query->the_post();
+                ?>
+                <label><input id="cb<?php echo $count; ?>" type="checkbox" <?php if ($leagues[$subcount] == get_the_ID()) {
+                echo ' checked ';
+                $subcount++;
+            } ?> name="_leagues<?php echo $count; ?>" />
+                    <input id="r<?php echo $count; ?>" type="radio" <?php if ($league == get_the_ID()) echo "checked"; ?> name="_league" value="<?php echo get_the_ID(); ?>"> <?php echo get_the_title(); ?><Br></label>
+                <?php
+                $count++;
+            }
+            ?>
+        </p>
+        <p>Main team league (second column with radiobuttons) can be marked only for the selected leagues.</p>
+        <?php
+    }
+}
+
+function wpt_teams_background() {
+
+    $post = $_GET['post'];
+
+
+    echo '<input id="upload_image" type="text" size="36" name="_teams_back_image_url" value="" />
+<input id="upload_image_button" type="button" value="';
+    echo get_post_meta($post, '_teams_back_image_url', true) ? "Change Image" : "Upload Image";
+    echo'" />
+<br/><br/>
+<img style="max-width: 30%;" id="teams_back_image" name="teams_back_image" src ="' . get_post_meta($post, '_teams_back_image_url', true) . '" ?>';
+
+    function my_admin_scripts() {
+        wp_enqueue_script('media-upload');
+        wp_enqueue_script('thickbox');
+        wp_register_script('my-upload', WP_PLUGIN_URL . '/my-script.js', array('jquery', 'media-upload', 'thickbox'));
+        wp_enqueue_script('my-upload');
+    }
+
+    function my_admin_styles() {
+
+        wp_enqueue_style('thickbox');
+    }
+
+// better use get_current_screen(); or the global $current_screen
+    if (isset($_GET['page']) && $_GET['page'] == 'my_plugin_page') {
+
+        add_action('admin_print_scripts', 'my_admin_scripts');
+        add_action('admin_print_styles', 'my_admin_styles');
+    }
+    ?>
+    <script>jQuery(document).ready(function ($) {
+
+            $('#upload_image_button').click(function () {
+
+                formfield = $('#upload_image').attr('name');
+                tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+                return false;
+            });
+
+            window.send_to_editor = function (html) {
+
+                imgurl = $('img', html).attr('src');
+                $('#upload_image').val(imgurl);
+                document.getElementById("teams_back_image").src = imgurl;
+                document.getElementById("upload_image_button").value = "Change Image";
+                tb_remove();
+            };
+
+        });
+    </script>
+    <?php
+}
+
+//MATCHES METABOXES/////////////////////////////////////////////////////////////
+
+function add_matches_metaboxes() {
+    add_meta_box('wpt_match_information', 'Match information', 'wpt_match_information', 'matches', 'normal', 'high');
+}
+
+function wpt_match_information() {
+    ?>
+    <style>
+        .image_w_100{
+            width: 100px;
+            min-width: 100px;
+            //min-height: 100px;
+            height: auto;
+            //background-color: #DDD;
+        }
+        .score_box{
+            width:40px 
+        }
+        .txtar{
+            background-color: #DDD;
+            vertical-align: top;
+            min-width: 120px;
+        }
+        .txtar_title{
+            margin-top: 0px!important;
+            margin-bottom: 0px!important;
+        }
+        .txt{
+            height: 220px;
+        }
+        .team_choose td
+        {
+            text-align: center;
+        }
+    </style>
+    <?php
+    $post = $_GET['post'];
+    $image1url;
+    $image2url;
+
+    $the_query = new WP_Query(array('post_type' => 'teams',));
+
+
+    if ($the_query->have_posts()) {
+        $currentValue1 = get_post_meta($post, '_match_team_id_1', true);
+        $currentValue2 = get_post_meta($post, '_match_team_id_2', true);
+
+        echo '<table class="team_choose">';
+        echo'<tr>';
+
+
+
+
+
+        echo'<td>';
+        echo'<select required name="_match_team_id_1" id="sel1" onchange="if (this.selectedIndex) updateSecondList(this);">';
+        echo '<option disabled';
+        if (!$currentValue1)
+            echo ' selected';
+        echo'>select first team</option>';
+
+        while ($the_query->have_posts()) {
+            $the_query->the_post();
+            $count = get_the_ID(); //get_the_title();
+            echo'<option ';
+            if ($currentValue1 == $count && $currentValue1 != NULL) {
+                echo ' selected';
+                $image1url = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()));
+            }
+
+            if ($currentValue2 == $count && $currentValue2 != NULL) {
+                echo ' style="display:none"';
+            }
+
+            echo' id="1-' . wp_get_attachment_url(get_post_thumbnail_id(get_the_ID())) . '" ';
+            echo' value="' . $count . '">';
+//echo get_the_post_thumbnail($post, array(10, 10));
+            echo get_the_title();
+            echo'</option>';
+        }
+        echo'</select></td><td>';
+
+        echo"VS";
+
+
+
+        echo'</td><td>';
+
+
+        echo'<select required id="sel2" name="_match_team_id_2" onchange="if (this.selectedIndex) updateFirstList(this);">';
+        echo '<option disabled';
+        if (!$currentValue2)
+            echo ' selected';
+        echo'>select second team</option>';
+        while ($the_query->have_posts()) {
+            $the_query->the_post();
+            $count = get_the_ID();
+            echo'<option';
+            if ($currentValue2 == $count && $currentValue2 != NULL) {
+                echo ' selected';
+                $image2url = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()));
+            }
+
+            if ($currentValue1 == $count && $currentValue1 != NULL) {
+                echo ' style="display:none"';
+            }
+
+            echo' id="2-' . wp_get_attachment_url(get_post_thumbnail_id(get_the_ID())) . '" ';
+            echo' value="' . $count . '">';
+            echo get_the_title();
+            echo'</option>';
+        }
+        echo'</select> </td>';
+        echo '</tr><tr>'
+        . '<td>';
+        echo'<img id="team1_image" class="image_w_100" src ="' . $image1url . '" ></td><td> SCORE<br/>';
+        echo "<input type='number' name='_score1' value='" . get_post_meta($post, '_score1', true) . "' class='score_box'/>";
+        echo "<input type='number' name='_score2' value='" . get_post_meta($post, '_score2', true) . "' class='score_box'/>";
+        echo "</td><td>";
+        echo '<img id="team2_image" class="image_w_100"  src = "' . $image2url . '";  >';
+        echo "</td></tr>";
+        ?>
+
+
+        <tr></tr>
+        <tr>
+            <td colspan="3">
+                <table>
+                    <tr>
+                        <td class="txtar">
+                            <h2 class="txtar_title">First team</h2>
+                            <textarea class="txt" name="_first_team_1_players"  id="first_team_1_players" ><?php echo get_post_meta($post, '_first_team_1_players', true); ?></textarea>
+                        </td>
+                        <td class="txtar">
+                            <h2 class="txtar_title">Substitute</h2>
+                            <textarea class="txt" name="_substitute_1_players" id="substitute_1_players" ><?php echo get_post_meta($post, '_substitute_1_players', true); ?></textarea>
+                        </td>
+
+                        <td class="txtar">
+                            <h2 class="txtar_title">First team</h2>
+                            <textarea class="txt" name="_first_team_2_players" id="first_team_2_players" ><?php echo get_post_meta($post, '_first_team_2_players', true); ?></textarea>
+                        </td>
+                        <td class="txtar">
+                            <h2 class="txtar_title">Substitute</h2>
+                            <textarea class="txt" name="_substitute_2_players" id="substitute_2_players" ><?php echo get_post_meta($post, '_substitute_2_players', true); ?></textarea>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                MATCH DATE: <input type="date" value=<?php echo"'" . get_post_meta($post, '_match_date', true) . "'" ?> name="_match_date">
+            </td>
+            <td>
+                MATCH TIME: <input type="time" value=<?php echo"'" . get_post_meta($post, '_match_time', true) . "'" ?> name="_match_time" >
+            </td>
+            <td>
+                hashtag: #<input type="text" name="_match_hashtag" value=<?php echo"'" . get_post_meta($post, '_match_hashtag', true) . "'" ?> placeholder="football">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                Show match score (if the match has already started or ended): <input type="checkbox" name="_show_score" <?php
+                if (get_post_meta($post, '_show_score', true)) {
+                    echo "checked";
+                }
+                ?>>
+            </td>
+            <td>
+                <?php
+                $location = get_post_meta($post, '_league', true);
+
+                $the_query = new WP_Query(array('post_type' => 'leagues',));
+
+
+                if ($the_query->have_posts()) {
+
+                    echo'League: <select required name="_league">';
+                    echo '<option disabled';
+                    if ($location == NULL)
+                        echo ' selected';
+                    echo'>Select a league</option>';
+
+
+                    while ($the_query->have_posts()) {
+                        $the_query->the_post();
+                        $count = get_the_ID();
+                        echo'<option';
+                        if ($location == $count && $location != NULL) {
+                            echo ' selected';
+                        }
+                        echo' value="' . $count . '">';
+                        echo get_the_title();
+                        echo'</option>';
+                    }
+                    echo'</select>';
+                }
+                ?>
+
+            </td>
+        </tr>
+        </table>
+        <?php
+    }
+    ?>
+    <script>
+
+
+        function updateSecondList(sel1)
+        {
+            var team1 = sel1.options[sel1.selectedIndex].id;
+            team1 = team1.substr(2, team1.length);
+            var sel2 = document.getElementById("sel2");
+            for (var i = 0; i < sel2.options.length; i++) {
+                sel2.options[i].style.display = "block";
+            }
+            document.getElementById("2-" + team1).style.display = "none";
+            document.getElementById("team1_image").src = team1;
+
+        }
+
+        function updateFirstList(sel2)
+        {
+            var team2 = sel2.options[sel2.selectedIndex].id;
+            team2 = team2.substr(2, team2.length);
+            var sel1 = document.getElementById("sel1");
+            for (var i = 0; i < sel1.options.length; i++) {
+                sel1.options[i].style.display = "block";
+            }
+            console.log(team2);
+            document.getElementById("1-" + team2).style.display = "none";
+            document.getElementById("team2_image").src = team2;
+        }
+    </script>
+
+    <?php
+}
+
+//LIGUES METABOXES//////////////////////////////////////////////////////////////
+
+function add_leagues_metaboxes() {
+    add_meta_box('wpt_league_tables', 'Tables', 'wpt_league_tables', 'leagues', 'normal', 'high');
+}
+
+function wpt_league_tables() {
+    wp_reset_postdata();
+
+    $default_table = "
+    <table>
+    <tr>
+                <td colspan='2'></td>
+                <td colspan='6'>OVERALL</td>
+                <td colspan='6'>HOME</td>
+                <td colspan='6'>AWAY</td>
+                <td colspan='3'></td>
+    </tr>
+    <tr>           
+            <td >POS</td>   
+            <td >TEAM</td>   
+
+            <td >P</td>    
+            <td >W</td>     
+            <td >D</td>     
+            <td >L</td>     
+            <td >F</td>    
+            <td >A</td>         
+
+            <td >P</td>     
+            <td >W</td>     
+            <td >D</td>     
+            <td >L</td>     
+            <td >F</td>     
+            <td >A</td>        
+
+            <td >P</td>     
+            <td >W</td>     
+            <td >D</td>     
+            <td >L</td>     
+            <td >F</td>     
+            <td >A</td>       
+
+            <td >GD</td>      
+            <td >PTS</td>
+    </tr>
+    <tr>
+   <td> </td>  <!--POS-->
+   <td> </td>  <!--TEAM-->
+
+<!--   W            P            D            L            F            A   -->
+   <td> </td>   <td> </td>   <td> </td>   <td> </td>   <td> </td>   <td> </td>  <!--OVERALL-->
+   <td> </td>   <td> </td>   <td> </td>   <td> </td>   <td> </td>   <td> </td>  <!--HOME-->
+   <td> </td>   <td> </td>   <td> </td>   <td> </td>   <td> </td>   <td> </td>  <!--AWAY-->
+ 
+   <td> </td> <!--GD-->
+   <td> </td> <!--PTS-->
+</tr></table>";
+
+    if (get_post_meta(get_the_ID(), '_tables', true) != null) {
+        wp_editor(get_post_meta(get_the_ID(), '_tables', true), '_tables');
+    } else {
+        wp_editor($default_table, '_tables');
+    }
+}
+
+//NEWS METABOXES////////////////////////////////////////////////////////////////
+
+function add_news_metaboxes() {
+    add_meta_box('wpt_news_league', 'League', 'wpt_news_league', 'news', 'normal', 'high');
+}
+
+function wpt_news_league() {
+    global $post;
+
+    $location = get_post_meta($post->ID, '_league', true);
+
+    $the_query = new WP_Query(array('post_type' => 'leagues',));
+
+    if ($the_query->have_posts()) {
+
+        echo'<select required name="_league">';
+        echo '<option disabled';
+        if (!$location)
+            echo ' selected';
+        echo'>Select a league</option>';
+
+
+        while ($the_query->have_posts()) {
+            $the_query->the_post();
+            $count = get_the_ID();
+            echo'<option';
+            if ($location == $count && $location != NULL) {
+                echo ' selected';
+            }
+            echo' value="' . $count . '">';
+            echo get_the_title();
+            echo'</option>';
+        }
+        echo'</select>';
+    }
+}
+
+//SAVING META///////////////////////////////////////////////////////////////////
+
+function wpt_save_meta($post_id, $post) {
+
+
+    if (!current_user_can('edit_post', $post->ID)) {
+        return $post->ID;
+    }
+
+
+
+    if (strcmp(get_post_type($post->ID), "teams") == 0) {
+        $temp = array(
+            '_league',
+            '_teams_back_image_url',
+        );
+        // if(isset($_POST['_league'])){echo $_POST['_league'];}
+        $the_query = new WP_Query(array('post_type' => 'leagues',));
+        $count = $the_query->post_count;
+        $all_leagues = $the_query->get_posts();
+        $leagues = array();
+        for ($i = 0; $i < $count; $i++) {
+            if (isset($_POST['_leagues' . $i])) {
+                array_push($leagues, ($all_leagues[$i]->ID));
+                // $leagues["some".$i]=$all_leagues[$i]->ID;
+            }
+        }
+        if (count($leagues) > 0) {
+            update_post_meta($post->ID, '_leagues', $leagues);
+        } else
+            $meta["_leagues"] = null;
+    }
+
+    if (strcmp(get_post_type($post->ID), "players") == 0) {
+
+        $temp = array(
+            '_team',
+            '_date_of_birth',
+            '_age',
+            '_country_of_birth',
+            '_height',
+            '_weight',
+            '_natonal_team',
+            '_appearances',
+            '_goals',
+            '_yellow_cards',
+            '_red_cards',
+            '_titles',
+            '_squad',
+            '_home_grown',
+            '_players_position',
+            '_number'
+        );
+    }
+
+    if (strcmp(get_post_type($post->ID), "matches") == 0) {
+
+        $temp = array(
+            '_match_team_id_1',
+            '_match_team_id_2',
+            '_score1',
+            '_score2',
+            '_match_date',
+            '_match_time',
+            '_match_hashtag',
+            '_first_team_1_players',
+            '_substitute_1_players',
+            '_first_team_2_players',
+            '_substitute_2_players',
+            '_league',
+        );
+
+        if (isset($_POST['_show_score'])) {
+            $meta['_show_score'] = true;
+        } else
+            $meta['_show_score'] = false;
+    }
+
+    if (strcmp(get_post_type($post->ID), "news") == 0) {
+        $temp = array(
+            '_league',
+        );
+    }
+
+    if (strcmp(get_post_type($post->ID), "leagues") == 0) {
+        $temp = array(
+            '_tables',
+        );
+    }
+
+    if (count($temp) > 0) {
+        foreach ($temp as $temp_value) {
+            if (isset($_POST[$temp_value])) {
+                $meta[$temp_value] = $_POST[$temp_value];
+            }
+        }
+    }
+
+
+
+//echo '<script>alert("'.$_POST['_stxt'].'");</script>';
+// Add values of $meta as custom fields
+    if (count($meta) == 0) {
+        return;
+    }
+
+    foreach ($meta as $key => $value) { // Cycle through the $meta array!
+        if ($post->post_type == 'revision') {
+//echo "<p>Don`t store custom data twice: ".$key."=> ".$value."</p>";
+            return; // Don't store custom data twice
+        }
+        $value = implode(',', (array) $value); // If $value is an array, make it a CSV (unlikely)
+
+        if (get_post_meta($post->ID, $key, FALSE)) { // If the custom field already has a value
+//echo "<p>custom field already has a value: ".$key."=> ".$value."</p>";
+            update_post_meta($post->ID, $key, $value);
+        } else { // If the custom field doesn't have a value
+// echo "<p>custom field doesn't have a value, create it: ".$key."=> ".$value."</p>";
+            add_post_meta($post->ID, $key, $value);
+        }
+        if ($value == NULL) {
+//echo "<p>Value is not set: ".$key."=> ".$value."</p>";
+            delete_post_meta($post->ID, $key); // Delete if blank
+        }
+    }
+}
+
+add_action('save_post', 'wpt_save_meta', 1, 2); // save the custom fields
+//METABOXES ARE SETTED//////////////////////////////////////////////////////////
+//SHORTCODES////////////////////////////////////////////////////////////////////
+
+add_shortcode('league_news', 'league_news');
+
+function league_news($atts) {
+
+    if (!$atts['league_id']) {
+        $args = array(
+            'post_type' => 'matches',
+            'posts_per_page' => 3,
+        );
+    } else {
+
+        $league_id = $atts['league_id'];
+        $args = array(
+            'post_type' => 'matches',
+            'posts_per_page' => 3,
+            'meta_query' => array(
+                array(
+                    'key' => '_league',
+                    'value' => $league_id,
+                ),
+            ),
+        );
+    }
+
+    $query = new WP_Query($args)
+    //$matches = $query->get_posts();
+    //if (get_post_meta($id1, '_match_date', true) > get_post_meta($id2, '_match_date', true)) {}
+    ?>
+
+    <link href='http://fonts.googleapis.com/css?family=Asap:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+    <div id="temp1" style="display: none;"></div>
+
+
+
+    <div class="league_news <?php if ($atts['home']) echo 'home-news'; ?>">
+        <?php
+        $count = 0;
+        if ($query->have_posts()) {
+            while ($query->have_posts()) {
+                $count++;
+                $query->the_post();
+                ?>
+
+
+                <a href="<?php echo get_permalink(); ?>">
+                    <div id="match-<?php echo $count ?>" class="match<?php
+                    echo $count;
+                    if (($atts['home']) && $count == 1)
+                        echo" big_match";
+                    ?>">
+					<?php $thumb = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'thumbnail_size' );?>
+                        <div class="match-pic" style="background-image: url(<?php echo $thumb[0]; ?>); background-repeat: no-repeat; background-position:center,center;  background-size: 100%,auto;">
+                            <?php
+							
+							//var_dump( $thumb[0][0] );
+                           /* if (($atts['home']) && $count == 1) {
+                                echo get_the_post_thumbnail(get_the_ID(), 'large', array('class' => 'match_back'));
+                            } else {
+                                echo get_the_post_thumbnail(get_the_ID(), array(800, 450), array('class' => 'match_back'));
+                            }*/
+                            ?>
+
+                        </div>
+                        <div class="gradient_ln">
+                             <div class="summary_back_holder"><div class="summary_back">Match Summary</div></div>
+                            <div class="min_match_title">
+                                <?php
+                                echo get_the_title(get_post_meta(get_the_ID(), '_match_team_id_1', true));
+                                echo " v. ";
+                                echo get_the_title(get_post_meta(get_the_ID(), '_match_team_id_2', true));
+                                echo " Full Match Summary";
+                                ?>
+                            </div> 
+                        </div>
+
+                    </div>
+                </a>            
+
+                <?php
+            }
+        }
+        ?>
+    </div>
+
+
+    <?php
+}
+
+//CUSTOM FUNCTION///////////////////////////////////////////////////////////////
+
+function setMatchArray($match_ID, $teamID = null) {
+    $match_team_id_1 = get_post_meta($match_ID, '_match_team_id_1', true);
+    $match_team_id_2 = get_post_meta($match_ID, '_match_team_id_2', true);
+
+    $dont_reverse_data = true;
+    if ($teamID) {
+        if ($teamID != $match_team_id_1) {
+            $dont_reverse_data = false;
+        }
+    }
+
+    $team_arr['permalink'] = get_permalink($match_ID);
+    $team_arr['team_id_1'] = $dont_reverse_data ? $match_team_id_1 : $match_team_id_2;
+    $team_arr['team_id_2'] = $dont_reverse_data ? $match_team_id_2 : $match_team_id_1;
+    $args = array('class' => "mini-pic");
+    
+    //$url = wp_get_attachment_url( get_post_thumbnail_id($team_arr['team_id_1']) );
+    $team_arr['team_1_image_url'] = wp_get_attachment_url( get_post_thumbnail_id($team_arr['team_id_1']) );
+    $team_arr['team_2_image_url'] = wp_get_attachment_url( get_post_thumbnail_id($team_arr['team_id_2']) );
+    $team_arr['team1'] = get_the_title($team_arr['team_id_1']);
+    $team_arr['team2'] = get_the_title($team_arr['team_id_2']);
+
+    if (get_post_meta($match_ID, '_show_score', true) == true) {
+
+        $score1 = get_post_meta($match_ID, '_score1', true);
+        $score2 = get_post_meta($match_ID, '_score2', true);
+        $team_arr['score'] = $dont_reverse_data ? $score1 . ":" . $score2 : $score2 . ":" . $score1;
+    } else {
+        $team_arr['score'] = "VS";
+    }
+    return $team_arr;
+}
+
+function build_table_from_array($arr, $sidebar = false) {
+
+    if ($arr >= 0) {
+        ?>
+        <a href="<?php echo $arr['permalink']; ?>">
+            <div class='mini_match_wrapper<?php if ($sidebar) echo " match_wrapper_sidebar"; ?>'>
+                <div class='team1_t<?php if ($sidebar) echo " team_t_sidebar"; ?>' >
+                    <div class='mini_team_pic th_wr<?php if ($sidebar) echo " mini_team_pic_sidebar"; ?>' style='background: url(<?php echo$arr['team_1_image_url']; ?>);'> 
+                        <?php //echo $arr['team_1_image_url']; ?>
+                    </div>
+                    <div class='mini_team_name<?php if ($sidebar) echo " mini_team_name_sidebar"; ?>'>
+                        <?php echo $arr['team1']; ?>
+                    </div>
+                </div>
+                <div class='score_t<?php if ($sidebar) echo " score_t_sidebar"; ?>'>
+                    <?php echo $arr['score']; ?>
+                </div>
+                <div class='team2_t<?php if ($sidebar) echo " team_t_sidebar"; ?>'>
+                    <div class='mini_team_pic th_wr<?php if ($sidebar) echo " mini_team_pic_sidebar"; ?>' style='background: url(<?php echo$arr['team_2_image_url']; ?>);'>
+                        <?php //echo $arr['team_2_image_url']; ?>
+                    </div>
+                    <div class='mini_team_name<?php if ($sidebar) echo " mini_team_name_sidebar"; ?>'>
+                        <?php echo $arr['team2']; ?>
+                    </div>
+                </div>
+            </div>
+        </a>
+    <?php } else { ?>
+        <div class='small_match_composition no_game_field'> </div>
+        <?php
+    }
+}
+
+function get_team_leagues($team_ID, $get_main_league = true) {
+    $all_leagues = get_post_meta($team_ID, '_leagues', true);
+    if ($get_main_league) {
+        return $all_leagues;
+    } 
+    else {
+        $main_league = get_post_meta($team_ID, '_league', true);
+        $leagues = array();
+        for ($i = 0; $i < count($all_leagues); $i++) {
+            if ($all_leagues[$i] != $main_league) {
+                array_push($leagues, $all_leagues[$i]);
+            }
+        }
+        return $leagues;
+    }
+}
+
+function team_belongs_to_league($team_ID,$league_ID){
+    return in_array($league_ID, get_post_meta($team_ID, '_leagues', true));
+}
+
+function get_league_teams($league_ID){
+   $the_query = new WP_Query(array('post_type' => 'teams',));
+   $all_teams = $the_query->get_posts();
+   $teams=array();
+   for($i=0;$i<count($all_teams);$i++){
+       if(team_belongs_to_league($all_teams[$i]->ID, $league_ID)){
+           array_push($teams,$all_teams[$i]->ID);
+       }
+   }
+   return $teams;
+}
+
+//DEINSTALLATION////////////////////////////////////////////////////////////////
+register_uninstall_hook(__FILE__, 'my_uninstall_hook');
+
+function my_uninstall_hook(){
+    global $wpdb;
+    $table_name = $wpdb->prefix . "tweets";
+    $e=$wpdb->query("DROP TABLE {$table_name}");
+	//die(var_dump($e));
+}
+
+
+function clearTweets(){
+    my_uninstall_hook();
+    jal_install ();
+}
